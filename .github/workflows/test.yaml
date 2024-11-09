@@ -1,0 +1,50 @@
+name: Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      kill:
+        description: 'Kill the runner'
+        required: false
+        default: false
+        type: boolean
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Default conf
+      continue-on-error: true
+      run: |
+        cat /etc/resolv.conf 
+        cat /etc/docker/daemon.json
+        cat /etc/resolv.conf > /tmp/resolv.conf
+  
+    - name: Harden Runner
+      uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
+      with:
+        egress-policy: audit
+    
+    - name: ls
+      shell: bash
+      continue-on-error: true
+      run: |
+        ls -al /home/agent/*
+        cat /etc/docker/daemon.json
+        ls -al /etc/res*
+        cat /etc/resolv.conf
+    
+    - name: kill
+      if: ${{ inputs.kill == true }}
+      shell: bash
+      run: |
+        id 
+        groups
+        pid=$(ps aux | grep /home/agent/agent | grep -v grep | awk '{print $2}')
+        echo "Killing $pid"
+        sudo kill -9 $pid
+    
+    - name: do mess
+      shell: bash
+      run: |
+        echo "aaaa" > /tmp/pwn
+        curl www.google.com
