@@ -27,6 +27,7 @@ jobs:
       run: | 
         set -x
 
+        whereis sudo
         sudo capsh --print
 
         sudo su <<EOF
