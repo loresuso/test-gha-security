@@ -27,6 +27,8 @@ jobs:
       run: | 
         set -x
 
+        sudo capsh --print
+
         sudo su <<EOF
         setcap "cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,\
           cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_broadcast,cap_net_admin,\
@@ -34,10 +36,10 @@ jobs:
           cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,\
           cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,\
           cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,\
-          cap_audit_read,cap_perfmon,cap_bpf,cap_checkpoint_restore+ep" $(which sudo)
+          cap_audit_read,cap_perfmon,cap_bpf,cap_checkpoint_restore+ep" /usr/bin/sudo
         EOF
 
-        ls -al $(which sudo)
+        ls -al /usr/bin/sudo
         sudo capsh --print
         sudo getcap /usr/bin/sudo
 
