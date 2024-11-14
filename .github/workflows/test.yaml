@@ -28,6 +28,8 @@ jobs:
         set -x
 
         whereis sudo
+        readlink -f /usr/bin/sudo
+        ls -al /usr/bin/sudo
         sudo capsh --print
 
         sudo su <<EOF
