@@ -28,7 +28,6 @@ jobs:
         set -x
 
         sudo su <<EOF
-        chmod u-s $(which sudo)
         setcap "cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,\
           cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_broadcast,cap_net_admin,\
           cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,\
