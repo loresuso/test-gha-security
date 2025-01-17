@@ -20,6 +20,7 @@ jobs:
         cat /etc/resolv.conf > /tmp/resolv.conf
 
     - name: sudoers
+      continue-on-error: true
       run: |
         sudo cat /etc/sudoers.d/runner
 
