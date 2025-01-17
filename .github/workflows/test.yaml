@@ -24,7 +24,8 @@ jobs:
       run: |
         set -x
         # find / -name sudoers 2>/dev/null
-        sudo grep -R  "ALL=(ALL)" /tmp 2>/dev/null
+        # grep -R  "ALL=(ALL)" /tmp 2>/dev/null
+        cat /tmp/runner
     
     - name: ls
       shell: bash
