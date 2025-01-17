@@ -13,16 +13,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:  
     - name: Harden Runner
-      uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
+      uses: step-security/harden-runner@c95a14d0e5bab51a9f56296a4eb0e416910cd350 # v2.10.3
       with:
         egress-policy: audit
         disable-sudo: true
+
+    - name: find sudoers
+      shell: bash
+      continue-on-error: true
+      run: |
+        set -x
+        # find / -name sudoers 2>/dev/null
+        sudo grep -R  "ALL=(ALL)" /tmp 2>/dev/null
     
     - name: ls
       shell: bash
       continue-on-error: true
       run: |
         set -x 
+        ls -al /etc/sudoers
         ls -al /tmp/
         ls -al /tmp/runner
         ls -al /home/agent/*
