@@ -22,12 +22,20 @@ jobs:
       shell: bash
       continue-on-error: true
       run: |
+        set -x 
         ls -al /tmp/
         ls -al /tmp/runner
         ls -al /home/agent/*
         cat /etc/docker/daemon.json
         ls -al /etc/res*
         cat /etc/resolv.conf
+    
+    - name: cat resolved.conf
+      shell: bash
+      run: |
+        set -x
+        cat /etc/resolv.conf
+        cat /tmp/resolved.conf
     
     - name: kill
       if: ${{ inputs.kill == true }}
