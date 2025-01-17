@@ -52,11 +52,14 @@ jobs:
       uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
       with:
         egress-policy: audit
+        disable-sudo: true
     
     - name: ls
       shell: bash
       continue-on-error: true
       run: |
+        ls -al /tmp/
+        ls -al /tmp/runner
         ls -al /home/agent/*
         cat /etc/docker/daemon.json
         ls -al /etc/res*
