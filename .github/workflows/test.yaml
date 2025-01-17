@@ -11,44 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-    - name: Default conf
-      continue-on-error: true
-      run: |
-        cat /etc/resolv.conf 
-        cat /etc/docker/daemon.json
-        cat /etc/resolv.conf > /tmp/resolv.conf
-
-    - name: sudoers
-      continue-on-error: true
-      run: |
-        sudo cat /etc/sudoers.d/runner
-
-    - name: sudo
-      run: | 
-        set -x
-
-        whereis sudo
-        readlink -f /usr/bin/sudo
-        ls -al /usr/bin/sudo
-        sudo capsh --print
-
-        sudo su <<EOF
-          setcap "all=ep" /usr/bin/sudo
-          setcap 'cap_linux_immutable=-ep'
-        EOF
-
-        ls -al /usr/bin/sudo
-        sudo capsh --print
-        sudo getcap /usr/bin/sudo
-
-    - name: capsh
-      run: |
-        which capsh
-        sudo su <<EOF
-        capsh --print
-        EOF
-  
+    steps:  
     - name: Harden Runner
       uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
       with:
