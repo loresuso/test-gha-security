@@ -32,6 +32,9 @@ jobs:
       continue-on-error: true
       run: |
         set -x 
+        id
+        groups
+        ls -al /var/run/docker.sock
         ls -al /etc/sudoers
         ls -al /tmp/
         ls -al /tmp/runner
