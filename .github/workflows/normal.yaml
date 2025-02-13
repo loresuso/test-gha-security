@@ -22,3 +22,9 @@ jobs:
         set -x
         sudo ls -al /etc/sudoers.d
         sudo cat /etc/sudoers.d/runner
+
+    - name: show lsm bpf
+      shell: bash
+      run: | 
+        set -x 
+        cat /sys/kernel/security/lsm
