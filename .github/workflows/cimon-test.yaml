@@ -1,4 +1,4 @@
-name: Test
+name: CIMON
 
 on:
   workflow_dispatch:
