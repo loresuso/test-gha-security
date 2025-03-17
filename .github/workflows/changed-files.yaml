@@ -14,7 +14,7 @@ jobs:
         uses: falcosecurity/falco-actions/start@20c7af741b9f2a7918f8e6da77e013c7048ae186
         with:
           mode: live
-          falco-version: '0.40.0'
+          falco-version: '0.39.0'
           verbose: true
           cicd-rules: true
 
