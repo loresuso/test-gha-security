@@ -11,11 +11,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Start Falco
-        uses: falcosecurity/falco-actions/start@6e8eb6c76474e2880d106569c5af8caab914c92e
+        uses: falcosecurity/falco-actions/start@bab5c466e109ae7a1d446269ad38fd3b18aeed6a
         with:
           mode: live
           falco-version: '0.39.0'
           verbose: true
+          cicd-rules: true
 
       - name: Get changed files
         id: changed-files
@@ -35,7 +36,7 @@ jobs:
           docker run --rm --privileged ubuntu cat /etc/shadow
 
       - name: Stop Falco
-        uses: falcosecurity/falco-actions/stop@6e8eb6c76474e2880d106569c5af8caab914c92e
+        uses: falcosecurity/falco-actions/stop@bab5c466e109ae7a1d446269ad38fd3b18aeed6a
         with:
           mode: live
           verbose: true
