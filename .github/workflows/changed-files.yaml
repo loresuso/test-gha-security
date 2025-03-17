@@ -17,6 +17,7 @@ jobs:
           falco-version: '0.39.0'
           verbose: true
           cicd-rules: true
+          custom-rule-file: '${{ github.workspace }}/cicd.yaml'
 
       - name: Get changed files
         id: changed-files
