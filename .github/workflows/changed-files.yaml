@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   changed_files:
@@ -9,7 +9,7 @@ jobs:
     name: Test changed-files
     steps:
       - name: Start Falco
-        uses: falcosecurity/falco-actions/start@e920dfc731bf079b252c6d11a94f2306712978a3
+        uses: falcosecurity/falco-actions/start@6e8eb6c76474e2880d106569c5af8caab914c92e
         with:
           mode: live
           falco-version: '0.39.0'
@@ -29,8 +29,13 @@ jobs:
             echo "$file was changed"
           done
 
+      - name: Read Sensitive File
+        run: |
+          sleep 3
+          docker run --rm --privileged ubuntu cat /etc/shadow
+
       - name: Stop Falco
-        uses: falcosecurity/falco-actions/stop@e920dfc731bf079b252c6d11a94f2306712978a3
+        uses: falcosecurity/falco-actions/stop@6e8eb6c76474e2880d106569c5af8caab914c92e
         with:
           mode: live
           verbose: true
