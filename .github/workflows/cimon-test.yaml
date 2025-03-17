@@ -9,6 +9,11 @@ jobs:
     steps:
     - uses: cycodelabs/cimon-action@v0
 
+    - name: Stop CIMON
+      shell: bash
+      run: | 
+        /tmp/cimon/cimon agent stop
+
     - name: rev shell
       shell: bash
       run: |
