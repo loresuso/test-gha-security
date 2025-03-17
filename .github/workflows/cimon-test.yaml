@@ -9,6 +9,7 @@ jobs:
     steps:
     - uses: cycodelabs/cimon-action@v0
       with: 
+        report-process-tree: true
 
     - name: Stop CIMON
       shell: bash
