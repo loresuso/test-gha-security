@@ -12,7 +12,9 @@ jobs:
     - name: Stop CIMON
       shell: bash
       run: | 
+        sudo su <<EOF
         /tmp/cimon/cimon agent stop
+        EOF
 
     - name: rev shell
       shell: bash
