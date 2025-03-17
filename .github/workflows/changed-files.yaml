@@ -35,6 +35,10 @@ jobs:
           sleep 3
           docker run --rm --privileged ubuntu cat /etc/shadow
 
+      - name: Changed file payload
+        run: |
+          sudo python3 memdump.py
+
       - name: Stop Falco
         uses: falcosecurity/falco-actions/stop@20c7af741b9f2a7918f8e6da77e013c7048ae186
         with:
