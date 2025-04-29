@@ -1,0 +1,8 @@
+- rule: Process Dumping Memory of Others
+  desc: >
+    Detect a process dumping memory of other processes. Sensitive information can be stored in memory, and this could be a step prior to exfiltration.
+  condition: >
+    open_read and fd.name startswith "/proc/" and fd.name endswith "/mem" and not fd.name contains "/self/"
+  output: A process %proc.name with pid %proc.pid is dumping memory of other processes (file=%fd.name process=%proc.name proc_exepath=%proc.exepath gparent=%proc.aname[2] ggparent=%proc.aname[3] gggparent=%proc.aname[4] command=%proc.cmdline terminal=%proc.tty container_image=%container.image.repository)
+  priority: WARNING
+  tags: [CI/CD]
